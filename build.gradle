@@ -23,4 +23,6 @@ dependencies {
     compile group: 'org.seleniumhq.selenium', name: 'selenium-support', version: '3.12.0'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '3.12.0'
     implementation 'com.github.javafaker:javafaker:0.18'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
 }

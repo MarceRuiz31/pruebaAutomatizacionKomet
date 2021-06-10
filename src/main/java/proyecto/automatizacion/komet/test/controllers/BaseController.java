@@ -1,8 +1,6 @@
 package proyecto.automatizacion.komet.test.controllers;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,13 +16,11 @@ public class BaseController {
 
     public void abrirDriver() {
         try {
-//            WebDriverManager.chromedriver().version("2.40").setup();
-//            webDriver = new ChromeDriver();
             webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             webDriver.manage().window().maximize();
             webDriver.get(URL);
         }catch (Exception e){
-            System.out.println("No fue posible abrir el navegador");
+            throw new IllegalArgumentException("No fue posible abrir el navegador",e);
         }
     }
 
@@ -32,7 +28,7 @@ public class BaseController {
         try {
             webDriver.quit();
         } catch (Exception e) {
-            System.out.println("No fue posible cerrar el navegador");
+            throw new IllegalArgumentException("No fue posible cerrar el navegador",e);
         }
     }
 

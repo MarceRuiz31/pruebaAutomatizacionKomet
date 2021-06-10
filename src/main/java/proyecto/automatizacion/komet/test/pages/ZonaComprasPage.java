@@ -34,6 +34,12 @@ public class ZonaComprasPage {
     @FindBy(id = "layer_cart_product_attributes")
     private WebElement lblCaracte;
 
+    @FindBy(xpath = "//*[@class='shopping_cart']//*[@class='ajax_cart_quantity']")
+    private WebElement lblCar;
+
+    @FindBy(xpath = "//span[text()='Proceed to checkout']")
+    private WebElement btnCheckout;
+
     public ZonaComprasPage(WebDriver webDriver){
         PageFactory.initElements(webDriver,this);
     }
@@ -68,5 +74,13 @@ public class ZonaComprasPage {
 
     public WebElement getLblCaracte() {
         return lblCaracte;
+    }
+
+    public WebElement getLblCar() {
+        return lblCar;
+    }
+
+    public WebElement getBtnCheckout() {
+        return btnCheckout;
     }
 }
