@@ -1,28 +1,33 @@
 package proyecto.automatizacion.komet.test.controllers;
 
 import com.github.javafaker.Faker;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import proyecto.automatizacion.komet.test.dto.DatosComprador;
 import proyecto.automatizacion.komet.test.pages.CrearCuentaPage;
 import proyecto.automatizacion.komet.test.pages.CuentaPage;
+import proyecto.automatizacion.komet.test.pages.DireccionesPage;
 
 import static proyecto.automatizacion.komet.test.helps.Diccionario.PAIS;
 
-public class CuentaController {
+public class CuentaControlador {
 
     static Faker faker = new Faker();
     WebDriver webDriver;
     WebDriverWait wait;
     CuentaPage cuentaPage;
     CrearCuentaPage crearCuentaPage;
+    DireccionesPage direccionesPage;
 
-    public CuentaController(WebDriver webDriver){
+    public CuentaControlador(WebDriver webDriver){
         this.webDriver = webDriver;
         wait = new WebDriverWait(webDriver, 10);
         cuentaPage = new CuentaPage(webDriver);
         crearCuentaPage = new CrearCuentaPage(webDriver);
+        direccionesPage = new DireccionesPage(webDriver);
     }
 
     public DatosComprador crearCuenta() {
@@ -81,5 +86,18 @@ public class CuentaController {
             throw new IllegalArgumentException("No se puso ingresar los datos de la creación de cuenta",e);
         }
         return datosComprador;
+    }
+
+    public void iniciarSesion(String usuario) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(cuentaPage.getInputEmail())).sendKeys(usuario);
+            wait.until(ExpectedConditions.visibilityOf(cuentaPage.getInputPassword())).sendKeys(usuario);
+            wait.until(ExpectedConditions.visibilityOf(cuentaPage.getBtnInicioSesion())).click();
+
+            boolean stepDirecciones = wait.until(ExpectedConditions.visibilityOf(direccionesPage.getLblDatosEntrega())).isEnabled();
+            Assert.assertTrue("No fue posible ingresar al paso de Direcciones",stepDirecciones);
+        }catch (Exception e){
+            throw new IllegalArgumentException("No fue posible iniciar sesión para continuar con la compra",e);
+        }
     }
 }

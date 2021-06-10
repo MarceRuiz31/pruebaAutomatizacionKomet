@@ -9,20 +9,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.Marker;
 import proyecto.automatizacion.komet.test.dto.DatosComprador;
 import proyecto.automatizacion.komet.test.pages.DireccionesPage;
 import proyecto.automatizacion.komet.test.pages.EnvioPage;
 import proyecto.automatizacion.komet.test.pages.PagoPage;
 import proyecto.automatizacion.komet.test.pages.ZonaComprasPage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static proyecto.automatizacion.komet.test.helps.Diccionario.MSG_ERROR;
 import static proyecto.automatizacion.komet.test.helps.Diccionario.URL_INICIO;
 
-public class ComprasController {
+public class ComprasControlador {
 
     ZonaComprasPage zonaComprasPage;
     EnvioPage envioPage;
@@ -33,7 +32,7 @@ public class ComprasController {
     JavascriptExecutor javascriptExecutor;
     Faker faker = new Faker();
 
-    public ComprasController(WebDriver webDriver){
+    public ComprasControlador(WebDriver webDriver){
         this.webDriver= webDriver;
         wait = new WebDriverWait(webDriver, 10);
         zonaComprasPage = new ZonaComprasPage(webDriver);
@@ -84,8 +83,14 @@ public class ComprasController {
     }
 
     private void seleccionarPrendaDescuento(String descuento) {
+        List<WebElement> listDesc = new ArrayList<>();
+        int intentos = 3;
         try {
-            List<WebElement> listDesc = zonaComprasPage.getListDescuentos();
+            do{
+                listDesc = zonaComprasPage.getListDescuentos();
+                intentos= intentos - 1;
+            }while (listDesc.isEmpty() && intentos > 0);
+
             for (WebElement elemento : listDesc){
                 String valor = elemento.getText();
                 if (valor.contains(descuento)){

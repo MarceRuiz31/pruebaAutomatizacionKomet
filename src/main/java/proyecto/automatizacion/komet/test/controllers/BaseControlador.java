@@ -6,11 +6,11 @@ import java.util.concurrent.TimeUnit;
 
 import static proyecto.automatizacion.komet.test.helps.Diccionario.URL;
 
-public class BaseController {
+public class BaseControlador {
 
     WebDriver webDriver;
 
-    public BaseController(WebDriver webDriver){
+    public BaseControlador(WebDriver webDriver){
         this.webDriver= webDriver;
     }
 
