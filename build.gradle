@@ -26,3 +26,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
+
+test{
+useJUnit()
+    include('**/TestRunnerCompra*')
+    maxParallelForks = 1
+    reports.junitXml.setEnabled(false)
+    reports.html.setEnabled(false)
+}
